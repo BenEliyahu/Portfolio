@@ -25,11 +25,11 @@ Ben Eliyahu is a Full Stack Developer & AI enthusiast from Israel with 3+ years 
 - Tools: Git, Postman, SharePoint
 
 --- FEATURED PROJECTS ---
-1. Strava Analyzer (https://strava-analyzer-production.up.railway.app/) — Fitness data platform that connects to the Strava API to visualize training stats and performance trends. Built with Node.js, JavaScript. GitHub: https://github.com/BenEliyahu/strava-analyzer
-2. CV Improver (https://cv-improver-production.up.railway.app/) — AI-powered resume enhancement tool that analyzes CVs and gives smart suggestions. Built with Node.js, JavaScript. GitHub: https://github.com/BenEliyahu/CV-Improver
-3. ChainResource — Tiered caching system using the Chain of Responsibility design pattern. Fetches exchange rates from memory, file system, or live API — in order of speed. Built with C#, .NET. GitHub: https://github.com/BenEliyahu/ChainResource
-4. Box Arrangement System — Advanced data structures using Binary Search Trees. Organize items by size & date. Built with C#. GitHub: https://github.com/BenEliyahu/Box-Arrangement-System
-5. MovieIL (https://movie-il.vercel.app/) — Movie information app with dynamic content and interactive UI. Built with JavaScript, HTML, CSS. GitHub: https://github.com/BenEliyahu/MovieIL
+1. Strava Analyzer (https://strava-analyzer-production.up.railway.app/) — Fitness data platform that connects to the Strava API to visualize training stats and performance trends, with AI-powered analysis via OpenAI. Built with Node.js, Express.js, Strava API, OpenAI API, Axios. Deployed on Railway. GitHub: https://github.com/BenEliyahu/strava-analyzer
+2. CV Improver (https://cv-improver-production.up.railway.app/) — AI-powered resume enhancement tool. Upload a PDF or Word CV and get smart improvement suggestions via OpenAI. Handles file parsing with pdf-parse, pdfkit, mammoth, and multer. Built with Node.js, Express.js. Deployed on Railway. GitHub: https://github.com/BenEliyahu/CV-Improver
+3. ChainResource — Tiered caching system using the Chain of Responsibility design pattern. Fetches exchange rates from memory, file system, or live REST API — in order of speed. Built with C#, .NET. GitHub: https://github.com/BenEliyahu/ChainResource
+4. Food Tracker (https://food-tracker-eight-kappa.vercel.app/) — AI-powered nutrition tracker with barcode scanning (@zxing), meal logging, macro charts (Recharts), and smart food suggestions via OpenAI. Built with React 19, TypeScript, Firebase, Vite, Tailwind CSS v4. GitHub: https://github.com/BenEliyahu/Food-Tracker
+5. MovieIL (https://movie-il.vercel.app/) — Movie discovery app. Full React application with global state via Zustand, routing via React Router, Firebase backend, styled-components, Swiper carousels, and ratings UI. GitHub: https://github.com/BenEliyahu/MovieIL
 
 --- LANGUAGES ---
 Hebrew (Native), English (Proficient), Arabic (Conversational)
