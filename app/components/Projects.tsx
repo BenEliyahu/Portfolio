@@ -32,11 +32,12 @@ const projects = [
   },
   {
     id: 4,
-    title: 'Box Arrangement System',
-    description: 'Advanced data structures using Binary Search Trees. Organize items by size & date.',
-    tech: ['C#', 'Data Structures', 'BST', 'OOP'],
-    github: 'https://github.com/BenEliyahu/Box-Arrangement-System',
-    icon: '📦',
+    title: 'Food Tracker',
+    description: 'AI-powered nutrition tracker with barcode scanning, meal logging, macro charts, and smart food suggestions via OpenAI.',
+    tech: ['React', 'TypeScript', 'Firebase', 'OpenAI', 'Recharts'],
+    github: 'https://github.com/BenEliyahu/Food-Tracker',
+    live: 'https://food-tracker-eight-kappa.vercel.app/',
+    icon: '🥗',
   },
   {
     id: 5,
