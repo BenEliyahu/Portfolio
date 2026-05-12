@@ -16,7 +16,7 @@ Ben Eliyahu is a Full Stack Developer & AI enthusiast from Israel with 3+ years 
 - Education: Full Stack Development Bootcamp at SELA COLLEGE (2022)
 
 --- TECHNICAL SKILLS ---
-- Frontend: React, Next.js, Angular, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Bootstrap
+- Frontend: React, Next.js, Angular, Vue 3, TypeScript, JavaScript, HTML, CSS, Tailwind CSS, Bootstrap
 - Backend: Node.js, Express.js, NestJS, ASP.NET Core, C#, Python, REST APIs, GraphQL
 - Databases: SQL Server, MongoDB, Firebase, Redis, SQLite
 - Cloud & DevOps: Azure, AWS, Google Cloud, Docker, Kubernetes, Vercel, Railway
@@ -30,6 +30,7 @@ Ben Eliyahu is a Full Stack Developer & AI enthusiast from Israel with 3+ years 
 3. ChainResource — Tiered caching system using the Chain of Responsibility design pattern. Fetches exchange rates from memory, file system, or live REST API — in order of speed. Built with C#, .NET. GitHub: https://github.com/BenEliyahu/ChainResource
 4. Food Tracker (https://food-tracker-eight-kappa.vercel.app/) — AI-powered nutrition tracker with barcode scanning (@zxing), meal logging, macro charts (Recharts), and smart food suggestions via OpenAI. Built with React 19, TypeScript, Firebase, Vite, Tailwind CSS v4. GitHub: https://github.com/BenEliyahu/Food-Tracker
 5. MovieIL (https://movie-il.vercel.app/) — Movie discovery app. Full React application with global state via Zustand, routing via React Router, Firebase backend, styled-components, Swiper carousels, and ratings UI. GitHub: https://github.com/BenEliyahu/MovieIL
+6. Vacation Management (https://vacation-management-front.onrender.com/) — Full-stack vacation request system with role-based access control. Employees submit and track vacation requests; managers review, approve, or reject them with comments through a dedicated dashboard. Features demo user seeding (3 requesters, 1 validator) and 13 passing tests. Built with Vue 3, TypeScript, Node.js, Express.js, TypeORM, PostgreSQL (Neon serverless). Deployed on Render. GitHub: https://github.com/BenEliyahu/Vacation-Management
 
 --- LANGUAGES ---
 Hebrew (Native), English (Proficient), Arabic (Conversational)
