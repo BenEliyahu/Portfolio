@@ -48,6 +48,15 @@ const projects = [
     live: 'https://movie-il.vercel.app/',
     icon: '🎬',
   },
+  {
+    id: 6,
+    title: 'Vacation Management',
+    description: 'Full-stack vacation request system with role-based access. Employees submit and track requests; managers review, approve, or reject them with a dedicated dashboard.',
+    tech: ['Vue 3', 'TypeScript', 'Node.js', 'Express.js', 'TypeORM', 'PostgreSQL'],
+    github: 'https://github.com/BenEliyahu/Vacation-Management',
+    live: 'https://vacation-management-front.onrender.com/',
+    icon: '🏖️',
+  },
 ];
 
 const containerVariants: Variants = {
