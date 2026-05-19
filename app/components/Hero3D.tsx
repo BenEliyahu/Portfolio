@@ -1,10 +1,7 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, MeshDistortMaterial, Sphere } from '@react-three/drei';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const roles = [
   'Full Stack Developer',
@@ -12,71 +9,6 @@ const roles = [
   'Node.js & React Expert',
   'Cloud & DevOps Builder',
 ];
-
-function TorusKnotMesh() {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    meshRef.current.rotation.x = state.clock.elapsedTime * 0.15;
-    meshRef.current.rotation.y = state.clock.elapsedTime * 0.2;
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
-      <mesh ref={meshRef}>
-        <torusKnotGeometry args={[1.2, 0.35, 200, 32, 2, 3]} />
-        <MeshDistortMaterial
-          color="#06b6d4"
-          emissive="#0284c7"
-          emissiveIntensity={0.4}
-          metalness={0.8}
-          roughness={0.1}
-          distort={0.15}
-          speed={2}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-function RingMesh({ radius, rotX, rotY, color }: { radius: number; rotX: number; rotY: number; color: string }) {
-  const ref = useRef<THREE.Mesh>(null);
-  useFrame((state) => {
-    if (!ref.current) return;
-    ref.current.rotation.x = rotX + state.clock.elapsedTime * 0.1;
-    ref.current.rotation.y = rotY + state.clock.elapsedTime * 0.15;
-  });
-  return (
-    <mesh ref={ref}>
-      <torusGeometry args={[radius, 0.015, 16, 120]} />
-      <meshBasicMaterial color={color} transparent opacity={0.3} />
-    </mesh>
-  );
-}
-
-function Scene3D() {
-  return (
-    <>
-      <color attach="background" args={['#020817']} />
-      <ambientLight intensity={0.3} />
-      <pointLight position={[5, 5, 5]} intensity={3} color="#06b6d4" />
-      <pointLight position={[-5, -5, 5]} intensity={2} color="#818cf8" />
-      <pointLight position={[0, 0, 8]} intensity={1} color="#ffffff" />
-      <TorusKnotMesh />
-      <RingMesh radius={2.5} rotX={Math.PI / 4} rotY={0} color="#06b6d4" />
-      <RingMesh radius={3.2} rotX={-Math.PI / 6} rotY={Math.PI / 3} color="#818cf8" />
-      <RingMesh radius={2.8} rotX={Math.PI / 2} rotY={Math.PI / 5} color="#38bdf8" />
-      <OrbitControls
-        autoRotate
-        autoRotateSpeed={1.5}
-        enableZoom={false}
-        enablePan={false}
-        enableRotate={false}
-      />
-    </>
-  );
-}
 
 export default function Hero3D() {
   const [mounted, setMounted] = useState(false);
@@ -107,7 +39,7 @@ export default function Hero3D() {
   if (!mounted) return null;
 
   return (
-    <section className="relative w-full min-h-screen bg-[#020817] overflow-hidden flex items-center">
+    <section className="relative w-full min-h-screen overflow-hidden flex items-center">
       {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.04]"
@@ -227,17 +159,10 @@ export default function Hero3D() {
           </motion.div>
         </motion.div>
 
-        {/* Right — 3D Canvas */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="w-full h-[420px] lg:h-[560px]"
-        >
-          <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
-            <Scene3D />
-          </Canvas>
-        </motion.div>
+        {/* Right column — empty on purpose. The global ScrollScene Canvas
+            renders the 3D orb behind the page, and its hero waypoint places
+            the orb exactly in this space. */}
+        <div aria-hidden className="hidden lg:block w-full h-[560px]" />
       </div>
 
       {/* Scroll indicator */}

@@ -10,7 +10,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="relative py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 to-slate-800 overflow-hidden">
+    <section id="about" className="relative py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900/85 via-slate-900/75 to-slate-800/85 backdrop-blur-[2px] overflow-hidden">
       {/* Glow backgrounds */}
       <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl translate-x-1/2 pointer-events-none" />

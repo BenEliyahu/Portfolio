@@ -79,7 +79,7 @@ const itemVariants: Variants = {
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+    <section id="projects" className="relative py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900/85 via-slate-800/75 to-slate-900/85 backdrop-blur-[2px] overflow-hidden">
       {/* Background glow */}
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
