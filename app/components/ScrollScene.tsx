@@ -25,6 +25,19 @@ function useScrollProgress(): MutableRefObject<number> {
   return progress;
 }
 
+// Matches the Tailwind `lg` breakpoint used by Hero3D's grid switch.
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return isMobile;
+}
+
 // Keyframed path through the page — one waypoint per section.
 const ORB_PATH = [
   new THREE.Vector3(2.6, 0.2, 0),      // Hero — right of text
@@ -32,6 +45,17 @@ const ORB_PATH = [
   new THREE.Vector3(3.2, 0.8, -2),     // Projects — far right, deeper
   new THREE.Vector3(-2.4, 0.6, -0.5),  // Skills — left, closer
   new THREE.Vector3(0, 0, 1.2),        // Contact — front and center
+];
+
+// On narrow viewports the text column takes the full width, so the desktop
+// path drifts off-screen. Keep the laptop centered and pushed back so it
+// reads as an ambient background element behind the content.
+const ORB_PATH_MOBILE = [
+  new THREE.Vector3(0, 0.2, -2.5),
+  new THREE.Vector3(0, -0.4, -3),
+  new THREE.Vector3(0, 0.6, -3.5),
+  new THREE.Vector3(0, -0.2, -3),
+  new THREE.Vector3(0, 0, -1.5),
 ];
 
 const COLOR_STOPS = [
@@ -209,7 +233,13 @@ function Laptop({
 const OPEN_DELAY_S = 0.4;
 const OPEN_DURATION_S = 1.5;
 
-function HeroOrb({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
+function HeroOrb({
+  scrollRef,
+  isMobile,
+}: {
+  scrollRef: MutableRefObject<number>;
+  isMobile: boolean;
+}) {
   const groupRef = useRef<THREE.Group>(null);
   const innerRef = useRef<THREE.Group>(null);
   const accentMatRef = useRef<THREE.MeshBasicMaterial>(null);
@@ -230,11 +260,14 @@ function HeroOrb({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
     innerRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.6) * 0.04;
 
     // Position along keyframed path
-    const target = sampleSegment(ORB_PATH, t, (a, b, k) => tmpVec.current.copy(a).lerp(b, k));
+    const path = isMobile ? ORB_PATH_MOBILE : ORB_PATH;
+    const target = sampleSegment(path, t, (a, b, k) => tmpVec.current.copy(a).lerp(b, k));
     groupRef.current.position.lerp(target, 0.07);
 
-    // Scale — laptop has volume, keep it modest
-    const pulse = 0.9 + Math.sin(t * Math.PI) * 0.18;
+    // Scale — laptop has volume, keep it modest. On mobile it sits behind
+    // the content as ambient backdrop, so shrink it further.
+    const base = isMobile ? 0.55 : 0.9;
+    const pulse = base + Math.sin(t * Math.PI) * (isMobile ? 0.1 : 0.18);
     tmpScale.current.setScalar(pulse);
     groupRef.current.scale.lerp(tmpScale.current, 0.06);
 
@@ -276,6 +309,7 @@ function CameraRig({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
 
 export default function ScrollScene() {
   const scrollRef = useScrollProgress();
+  const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -298,7 +332,7 @@ export default function ScrollScene() {
         <pointLight position={[-5, -5, 5]} intensity={2.2} color="#818cf8" />
         <pointLight position={[0, 0, 8]} intensity={1.2} color="#ffffff" />
         <Stars radius={70} depth={50} count={2500} factor={4} fade speed={1} />
-        <HeroOrb scrollRef={scrollRef} />
+        <HeroOrb scrollRef={scrollRef} isMobile={isMobile} />
         <CameraRig scrollRef={scrollRef} />
       </Canvas>
     </div>
