@@ -10,7 +10,7 @@ const projects = [
     description: 'Fitness data analysis platform. Connects to Strava API to visualize training stats, trends, and performance insights with AI-powered analysis.',
     tech: ['Node.js', 'Express.js', 'OpenAI API', 'Strava API'],
     github: 'https://github.com/BenEliyahu/strava-analyzer',
-    live: 'https://strava-analyzer-production.up.railway.app/',
+    live: 'https://strava-analyzer.vercel.app/',
     icon: '🏃',
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     description: 'AI-powered resume enhancement tool. Upload a PDF or Word CV and get smart suggestions to boost your job applications via OpenAI.',
     tech: ['Node.js', 'Express.js', 'OpenAI API', 'File Parsing'],
     github: 'https://github.com/BenEliyahu/CV-Improver',
-    live: 'https://cv-improver-production.up.railway.app/',
+    live: 'https://cv-improver.vercel.app/',
     icon: '📄',
   },
   {
