@@ -5,6 +5,7 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import ChatBot from './components/ChatBot';
 import ScrollScene from './components/ScrollScene';
+import AIShowcase from './components/AIShowcase';
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <div className="relative" style={{ zIndex: 1 }}>
         <Hero3D />
         <About />
+        <AIShowcase />
         <Projects />
         <Skills />
         <Contact />
