@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import OpenAI from 'openai';
+
+export const runtime = 'nodejs';
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -45,55 +47,77 @@ He has a friendly, energetic personality and a growth mindset. He picks up new t
 
 --- HOW TO RESPOND ---
 - Be warm, conversational, and authentic — not robotic or overly formal
+- You may use light markdown (**bold**, bullet lists, and [links](url)) to make answers scannable
 - If asked about projects, mention the live links when available
 - If asked about hobbies or personal stuff, be natural and friendly
 - Keep answers concise (2-4 sentences) unless more detail is clearly needed
 - You're speaking to potential employers, collaborators, or curious visitors`;
 
+type IncomingMessage = { sender?: 'user' | 'bot'; text?: string };
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { message, conversationHistory } = body;
+    const { message, conversationHistory } = body as {
+      message?: string;
+      conversationHistory?: IncomingMessage[];
+    };
 
     if (!message || !Array.isArray(conversationHistory)) {
-      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+      return Response.json({ error: 'Invalid request' }, { status: 400 });
     }
 
     if (!process.env.OPENAI_API_KEY) {
       console.error('OPENAI_API_KEY not set');
-      return NextResponse.json(
-        { error: 'API key not configured' },
-        { status: 500 }
-      );
+      return Response.json({ error: 'API key not configured' }, { status: 500 });
     }
 
-    const messages: any = [
+    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
       { role: 'system', content: systemPrompt },
       ...conversationHistory
-        .filter((msg: any) => msg.sender !== undefined)
-        .map((msg: any) => ({
-          role: msg.sender === 'user' ? 'user' : 'assistant',
-          content: msg.text,
+        .filter((msg) => msg.sender !== undefined && typeof msg.text === 'string')
+        .slice(-10)
+        .map((msg) => ({
+          role: (msg.sender === 'user' ? 'user' : 'assistant') as 'user' | 'assistant',
+          content: msg.text as string,
         })),
       { role: 'user', content: message },
     ];
 
-    const response = await client.chat.completions.create({
+    const completion = await client.chat.completions.create({
       model: 'gpt-4o-mini',
       max_tokens: 500,
       temperature: 0.7,
-      messages: messages,
+      stream: true,
+      messages,
     });
 
-    const assistantMessage = response.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        try {
+          for await (const chunk of completion) {
+            const token = chunk.choices[0]?.delta?.content;
+            if (token) controller.enqueue(encoder.encode(token));
+          }
+        } catch (err) {
+          console.error('Streaming error:', err);
+        } finally {
+          controller.close();
+        }
+      },
+    });
 
-    return NextResponse.json({ response: assistantMessage });
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache, no-transform',
+        'X-Accel-Buffering': 'no',
+      },
+    });
   } catch (error) {
     console.error('Chat API error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json(
-      { error: 'Failed to process message', details: errorMessage },
-      { status: 500 }
-    );
+    const details = error instanceof Error ? error.message : 'Unknown error';
+    return Response.json({ error: 'Failed to process message', details }, { status: 500 });
   }
 }
