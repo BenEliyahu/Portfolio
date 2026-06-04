@@ -1,7 +1,7 @@
 'use client';
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, RoundedBox, Stars } from '@react-three/drei';
+import { Float, RoundedBox } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import * as THREE from 'three';
 
@@ -38,24 +38,23 @@ function useIsMobile(): boolean {
   return isMobile;
 }
 
-// Keyframed path through the page — one waypoint per section.
+// The laptop is the Hero-only 3D moment. After Hero, it drifts back deep
+// into z so the AIShowcase scrollytelling section owns the rest of the
+// page without two 3D scenes competing for attention.
 const ORB_PATH = [
-  new THREE.Vector3(2.6, 0.2, 0),      // Hero — right of text
-  new THREE.Vector3(-2.8, -0.6, -1),   // About — slides left, recedes
-  new THREE.Vector3(3.2, 0.8, -2),     // Projects — far right, deeper
-  new THREE.Vector3(-2.4, 0.6, -0.5),  // Skills — left, closer
-  new THREE.Vector3(0, 0, 1.2),        // Contact — front and center
+  new THREE.Vector3(2.6, 0.2, 0),     // 0%  — Hero, visible right of text
+  new THREE.Vector3(4, 0.5, -20),     // 25% — by AIShowcase, gone into the deep
+  new THREE.Vector3(4, 0.5, -20),
+  new THREE.Vector3(4, 0.5, -20),
+  new THREE.Vector3(4, 0.5, -20),
 ];
 
-// On narrow viewports the text column takes the full width, so the desktop
-// path drifts off-screen. Keep the laptop centered and pushed back so it
-// reads as an ambient background element behind the content.
 const ORB_PATH_MOBILE = [
   new THREE.Vector3(0, 0.2, -2.5),
-  new THREE.Vector3(0, -0.4, -3),
-  new THREE.Vector3(0, 0.6, -3.5),
-  new THREE.Vector3(0, -0.2, -3),
-  new THREE.Vector3(0, 0, -1.5),
+  new THREE.Vector3(0, 0, -20),
+  new THREE.Vector3(0, 0, -20),
+  new THREE.Vector3(0, 0, -20),
+  new THREE.Vector3(0, 0, -20),
 ];
 
 const COLOR_STOPS = [
@@ -331,7 +330,6 @@ export default function ScrollScene() {
         <pointLight position={[5, 5, 5]} intensity={3} color="#06b6d4" />
         <pointLight position={[-5, -5, 5]} intensity={2.2} color="#818cf8" />
         <pointLight position={[0, 0, 8]} intensity={1.2} color="#ffffff" />
-        <Stars radius={70} depth={50} count={2500} factor={4} fade speed={1} />
         <HeroOrb scrollRef={scrollRef} isMobile={isMobile} />
         <CameraRig scrollRef={scrollRef} />
       </Canvas>

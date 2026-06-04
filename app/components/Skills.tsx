@@ -56,10 +56,6 @@ const itemVariants = {
 export default function Skills() {
   return (
     <section id="skills" className="relative py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-800/85 via-slate-900/75 to-slate-800/85 backdrop-blur-[2px] overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute -top-40 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 left-1/3 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
