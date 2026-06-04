@@ -39,7 +39,7 @@ export default function Hero3D() {
   if (!mounted) return null;
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden flex items-center">
+    <section id="home" className="relative w-full min-h-screen overflow-hidden flex items-center">
       {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.04]"
