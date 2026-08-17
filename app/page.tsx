@@ -22,7 +22,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="bg-slate-950/80 backdrop-blur-md text-gray-400 py-8 text-center border-t border-slate-800">
-          <p>© 2025 Ben Eliyahu. Built with Next.js, Three.js, and Claude AI.</p>
+          <p>© 2026 Ben Eliyahu. Built with Next.js, Three.js, and Claude AI.</p>
         </footer>
       </div>
     </main>
