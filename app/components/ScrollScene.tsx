@@ -322,14 +322,14 @@ export default function ScrollScene() {
     >
       <Canvas
         camera={{ position: [0, 0, 6], fov: 60 }}
-        dpr={[1, 1.6]}
-        gl={{ antialias: true, alpha: false }}
+        dpr={isMobile ? 1 : [1, 1.6]}
+        gl={{ antialias: !isMobile, alpha: false, powerPreference: isMobile ? 'low-power' : 'high-performance' }}
       >
         <color attach="background" args={['#020817']} />
         <ambientLight intensity={0.45} />
         <pointLight position={[5, 5, 5]} intensity={3} color="#06b6d4" />
-        <pointLight position={[-5, -5, 5]} intensity={2.2} color="#818cf8" />
-        <pointLight position={[0, 0, 8]} intensity={1.2} color="#ffffff" />
+        {!isMobile && <pointLight position={[-5, -5, 5]} intensity={2.2} color="#818cf8" />}
+        {!isMobile && <pointLight position={[0, 0, 8]} intensity={1.2} color="#ffffff" />}
         <HeroOrb scrollRef={scrollRef} isMobile={isMobile} />
         <CameraRig scrollRef={scrollRef} />
       </Canvas>

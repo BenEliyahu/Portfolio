@@ -18,7 +18,8 @@ const ACCENT_COLORS = [
   new THREE.Color('#34d399'), // emerald
 ];
 
-const PARTICLE_COUNT = 1800;
+const PARTICLE_COUNT_DESKTOP = 1800;
+const PARTICLE_COUNT_MOBILE = 600;
 
 type Shape = 'sphere' | 'cube' | 'torus' | 'helix';
 
@@ -69,8 +70,10 @@ function generateShape(shape: Shape, count: number): Float32Array {
 
 function MorphingPoints({
   progressRef,
+  particleCount,
 }: {
   progressRef: MutableRefObject<number>;
+  particleCount: number;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
   const materialRef = useRef<THREE.PointsMaterial>(null);
@@ -78,15 +81,15 @@ function MorphingPoints({
 
   const shapes = useMemo(
     () => [
-      generateShape('sphere', PARTICLE_COUNT),
-      generateShape('cube', PARTICLE_COUNT),
-      generateShape('torus', PARTICLE_COUNT),
-      generateShape('helix', PARTICLE_COUNT),
+      generateShape('sphere', particleCount),
+      generateShape('cube', particleCount),
+      generateShape('torus', particleCount),
+      generateShape('helix', particleCount),
     ],
-    []
+    [particleCount]
   );
 
-  const positions = useMemo(() => new Float32Array(PARTICLE_COUNT * 3), []);
+  const positions = useMemo(() => new Float32Array(particleCount * 3), [particleCount]);
   const tmpColor = useRef(new THREE.Color());
 
   // Initial position = first shape
@@ -108,7 +111,7 @@ function MorphingPoints({
     const b = shapes[i + 1];
     const time = state.clock.elapsedTime;
 
-    for (let p = 0; p < PARTICLE_COUNT; p++) {
+    for (let p = 0; p < particleCount; p++) {
       const j = p * 3;
       const jitter = 0.025;
       positions[j]     = a[j]     + (b[j]     - a[j])     * eased + Math.sin(time * 0.7 + p * 0.13) * jitter;
@@ -138,7 +141,7 @@ function MorphingPoints({
         <bufferAttribute
           attach="attributes-position"
           args={[positions, 3]}
-          count={PARTICLE_COUNT}
+          count={particleCount}
         />
       </bufferGeometry>
       <pointsMaterial
@@ -167,11 +170,25 @@ function CameraDrift({ progressRef }: { progressRef: MutableRefObject<number> })
   return null;
 }
 
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return isMobile;
+}
+
 export default function AIShowcase() {
   const outerRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const isMobile = useIsMobile();
+  const particleCount = isMobile ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP;
 
   useEffect(() => setMounted(true), []);
 
@@ -213,14 +230,14 @@ export default function AIShowcase() {
         {mounted && (
           <Canvas
             camera={{ position: [0, 0, 6], fov: 50 }}
-            dpr={[1, 1.6]}
-            gl={{ antialias: true, alpha: false }}
+            dpr={isMobile ? 1 : [1, 1.6]}
+            gl={{ antialias: !isMobile, alpha: false, powerPreference: isMobile ? 'low-power' : 'high-performance' }}
           >
             <color attach="background" args={['#020817']} />
             <ambientLight intensity={0.4} />
             <pointLight position={[10, 10, 10]} intensity={1.5} color="#06b6d4" />
-            <pointLight position={[-10, -5, 5]} intensity={1.0} color="#a78bfa" />
-            <MorphingPoints progressRef={progressRef} />
+            {!isMobile && <pointLight position={[-10, -5, 5]} intensity={1.0} color="#a78bfa" />}
+            <MorphingPoints progressRef={progressRef} particleCount={particleCount} />
             <CameraDrift progressRef={progressRef} />
           </Canvas>
         )}
