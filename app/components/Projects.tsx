@@ -57,6 +57,24 @@ const projects = [
     live: 'https://vacation-management-front.onrender.com/',
     icon: '🏖️',
   },
+  {
+    id: 7,
+    title: 'AI Brand Perception Scorecard',
+    description: 'Dashboard that measures how AI assistants (ChatGPT, Llama, Qwen) perceive a company versus its competitors, using an LLM-as-judge analysis layer with live scan history.',
+    tech: ['Node.js', 'Express.js', 'OpenAI API', 'Groq', 'MongoDB', 'Chart.js'],
+    github: 'https://github.com/BenEliyahu/AI-Brand-Perception-Scorecard',
+    live: 'https://jfrog-ai-scorecard.onrender.com',
+    icon: '📊',
+  },
+  {
+    id: 8,
+    title: 'Airport Investment Agent',
+    description: 'Conversational AI agent that identifies strong airport expansion investment candidates, backed by a deterministic scoring engine over FAA/BTS data and a live OpenSky feed.',
+    tech: ['Next.js', 'TypeScript', 'OpenAI API', 'Recharts'],
+    github: 'https://github.com/BenEliyahu/airport-investment-agent',
+    live: 'https://airportinvestmentagent.vercel.app/',
+    icon: '✈️',
+  },
 ];
 
 const containerVariants: Variants = {
